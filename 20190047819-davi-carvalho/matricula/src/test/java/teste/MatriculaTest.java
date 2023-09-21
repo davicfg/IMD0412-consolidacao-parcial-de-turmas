@@ -10,13 +10,13 @@ import org.junit.jupiter.api.Test;
 class MatriculaTest {
 
 	@Test
-	void test() {
+	void test(BigDecimal n1, BigDecimal n2, BigDecimal n3, Integer frequencia) {
 		Matricula m = new Matricula();
 		
-		m.registrarNota1(BigDecimal.valueOf(10l));
-		m.registrarNota2(BigDecimal.valueOf(10l));
-		m.registrarNota3(BigDecimal.valueOf(10l));
-		m.registrarFrequencia(100);
+		m.registrarNota1(n1);
+		m.registrarNota2(n2);
+		m.registrarNota3(n3);
+		m.registrarFrequencia(frequencia);
 		
 		m.consolidarParcialmente();
 		
