@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 class MatriculaTest {
 
 	@Test
-	void test(BigDecimal n1, BigDecimal n2, BigDecimal n3, Integer frequencia) {
+	void test(BigDecimal n1, BigDecimal n2, BigDecimal n3, Integer frequencia, String status) {
 		Matricula m = new Matricula();
 		
 		m.registrarNota1(n1);
@@ -20,7 +20,7 @@ class MatriculaTest {
 		
 		m.consolidarParcialmente();
 		
-		Assertions.assertEquals(StatusAprovacao.APR, m.status());
+		Assertions.assertEquals(status, m.status());
 	}
 
 }
