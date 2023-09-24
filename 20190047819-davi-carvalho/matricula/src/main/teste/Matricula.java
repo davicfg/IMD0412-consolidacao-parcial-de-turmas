@@ -1,8 +1,16 @@
 package teste;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
-public class Matricula {
+public class Matricula
+{
+	private static final BigDecimal TRES = BigDecimal.valueOf(3l);
+
+	private static final BigDecimal CINCO = BigDecimal.valueOf(5l);
+
+	private static final BigDecimal SETE = BigDecimal.valueOf(7l);
+
 	private Turma turma;
 
 	private Aluno aluno;
@@ -12,91 +20,106 @@ public class Matricula {
 	private BigDecimal nota2;
 
 	private BigDecimal nota3;
-	
+
 	private Integer frequencia;
 
 	private StatusAprovacao status;
 
-	public BigDecimal nota1() {
+	public BigDecimal nota1()
+	{
 		return this.nota1;
 	}
 
-	public BigDecimal nota2() {
+	public BigDecimal nota2()
+	{
 		return this.nota2;
 	}
 
-	public BigDecimal nota3() {
+	public BigDecimal nota3()
+	{
 		return this.nota3;
 	}
 
-	public StatusAprovacao status() {
+	public StatusAprovacao status()
+	{
 		return this.status;
 	}
 
-	public void registrarNota1(BigDecimal nota1) {
+	public void registrarNota1(BigDecimal nota1)
+	{
 		this.nota1 = nota1;
 	}
 
-	public void registrarNota2(BigDecimal nota2) {
+	public void registrarNota2(BigDecimal nota2)
+	{
 		this.nota2 = nota2;
 	}
 
-	public void registrarNota3(BigDecimal nota3) {
+	public void registrarNota3(BigDecimal nota3)
+	{
 		this.nota3 = nota3;
 	}
-	
-	public Integer frequencia() {
-		return frequencia;
-	}
 
-	public void registrarFrequencia(Integer frequencia) {
-		this.frequencia = frequencia;
-	}
-	
 	/**
-	 * Segue as regras estabelecidas pelos artigos do regulamento de graduação da UFRN: http://www.sistemas.ufrn.br/download/sigaa/public/regulamento_dos_cursos_de_graduacao.pdf
+	 * Segue as regras estabelecidas pelos artigos do regulamento de graduação da
+	 * UFRN:
+	 * http://www.sistemas.ufrn.br/download/sigaa/public/regulamento_dos_cursos_de_graduacao.pdf
 	 * 
 	 * A partir do artigo 104
 	 */
-	public void consolidarParcialmente() {
-		System.out.println(this.status);
-		BigDecimal media = this.calcularMedia();
-		if(media.compareTo(new BigDecimal("3")) == -1) {
+	public void consolidarParcialmente()
+	{
+
+		BigDecimal mediaParcial = nota1.add(nota2).add(nota3).divide(TRES, RoundingMode.HALF_EVEN);
+
+		if (frequencia < 75) 
+		{
+
+			if (mediaParcial.compareTo(TRES) < 0)
+			{
+				this.status = StatusAprovacao.REMF;
+			}
+			else
+			{
+				this.status = StatusAprovacao.REPF;
+			}
+
+		}
+		else
+		{
+			if(mediaParcial.compareTo(TRES) < 0)
+			{
 				this.status = StatusAprovacao.REP;
-		// APR, APRN
-		}else if(this.atendeCriterioAssiduidade()) {
-			if(media.compareTo(new BigDecimal("7")) >= 0 ) {
-				this.status = StatusAprovacao.APR;				
-			}else if ((media.compareTo(new BigDecimal("5")) >= 0 || media.compareTo(new BigDecimal("7")) < -1) && this.todasAsNotasAcimaDe3()) {
-				this.status = StatusAprovacao.APRN;				
-			}else {
-				this.status= StatusAprovacao.REC;
 			}
-			
-		}else {
-			if(media.compareTo(new BigDecimal("3")) == -1) {
-				this.status = StatusAprovacao.REPMF;
-			}else {
-				this.status = StatusAprovacao.REPF;					
+			else if(mediaParcial.compareTo(CINCO) < 0)
+			{
+				this.status = StatusAprovacao.REC;
 			}
-			
+			else if(mediaParcial.compareTo(SETE) < 0)
+			{
+				if(nota1.compareTo(TRES) < 0 || nota2.compareTo(TRES) < 0 || nota3.compareTo(TRES) < 0)
+				{
+					this.status = StatusAprovacao.REC;
+				}
+				else
+				{
+					this.status = StatusAprovacao.APRN;
+				}
+			}
+			else
+			{
+				this.status = StatusAprovacao.APR;
+			}
 		}
 	}
 
-	private boolean todasAsNotasAcimaDe3() {
-		return this.nota1.compareTo(new BigDecimal("3")) >= 0 && this.nota2.compareTo(new BigDecimal("3")) >= 0 && this.nota3.compareTo(new BigDecimal("3")) >= 0;
+	public Integer frequencia()
+	{
+		return frequencia;
 	}
 
-	private Boolean atendeCriterioAssiduidade() {
-		return this.frequencia() >= 75;
+	public void registrarFrequencia(Integer frequencia)
+	{
+		this.frequencia = frequencia;
 	}
-
-	private BigDecimal calcularMedia() {
-		BigDecimal soma = this.nota1.add(this.nota2).add(this.nota3);
-        BigDecimal media = soma.divide(new BigDecimal("3"), 2, BigDecimal.ROUND_HALF_UP);
-        return media;
-	}
-
-
-	
 }
