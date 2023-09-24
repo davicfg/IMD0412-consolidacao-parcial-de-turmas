@@ -59,34 +59,32 @@ public class Matricula {
 	 * A partir do artigo 104
 	 */
 	public void consolidarParcialmente() {
+		System.out.println(this.status);
 		BigDecimal media = this.calcularMedia();
-		
-		// TODOS
-		// APR, APRN, REC, REPF, REMF,  REP
-		
-		// FALTA
-		// REC  
-		
-		
+		if(media.compareTo(new BigDecimal("3")) == -1) {
+				this.status = StatusAprovacao.REP;
 		// APR, APRN
-		System.out.println(media);
-		System.out.println("################");
-		if(this.atendeCriterioAssiduidade()) {
+		}else if(this.atendeCriterioAssiduidade()) {
 			if(media.compareTo(new BigDecimal("7")) >= 0 ) {
 				this.status = StatusAprovacao.APR;				
-			}else if (media.compareTo(new BigDecimal("5")) >= 0 || media.compareTo(new BigDecimal("7")) < -1) {
+			}else if ((media.compareTo(new BigDecimal("5")) >= 0 || media.compareTo(new BigDecimal("7")) < -1) && this.todasAsNotasAcimaDe3()) {
 				this.status = StatusAprovacao.APRN;				
+			}else {
+				this.status= StatusAprovacao.REC;
 			}
+			
 		}else {
-			//REPF, REMF, REP
 			if(media.compareTo(new BigDecimal("3")) == -1) {
 				this.status = StatusAprovacao.REPMF;
 			}else {
 				this.status = StatusAprovacao.REPF;					
 			}
 			
-		}	
+		}
+	}
 
+	private boolean todasAsNotasAcimaDe3() {
+		return this.nota1.compareTo(new BigDecimal("3")) >= 0 && this.nota2.compareTo(new BigDecimal("3")) >= 0 && this.nota3.compareTo(new BigDecimal("3")) >= 0;
 	}
 
 	private Boolean atendeCriterioAssiduidade() {

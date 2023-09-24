@@ -34,21 +34,22 @@ class MatriculaTest {
 			"83	3.70	3.00	10.00	APRN	APRN18",
 			"84	6.30	2.90	8.20	REC	REC19",
 			"85	8.20	6.30	2.90	REC	REC20",
-			"86	4.00	4.00	3.00	REP	REP21",
-			"87	5.00	3.00	5.00	REP	REP22",
+			"86	4.00	4.00	3.00	REC	REC21",
+			"87	5.00	3.00	5.00	REC	REP22",
 			"88	7.00	3.10	6.50	APRN	APRN23",
 			"89	7.30	6.60	3.10	APRN	APRN24",
 			"92	10.00	10.00	10.00	APR	APR25",
 			"93	2.90	2.90	2.90	REP	REP26",
-			"94	3.00	3.00	3.00	REP	REP27",
+			"94	3.00	3.00	3.00	REC	REC27",
 			"95	4.20	3.10	2.00	REC	REC28",
 			"97	5.10	6.20	4.00	APRN	APRN29",
 			"96	6.90	6.90	6.90	APRN	APRN30",
 			"97	7.10	7.10	7.10	APR	APR31"
 })
 	void test(Integer frequencia, BigDecimal n1, BigDecimal n2, BigDecimal n3, String status, String nome_teste) {
-		Matricula m = new Matricula();
 		System.out.println(nome_teste);
+		
+		Matricula m = new Matricula();
 		m.registrarNota1(n1);
 		m.registrarNota2(n2);
 		m.registrarNota3(n3);
