@@ -77,7 +77,7 @@ public class Matricula
 
 			if (mediaParcial.compareTo(TRES) < 0)
 			{
-				this.status = StatusAprovacao.REMF;
+				this.status = StatusAprovacao.REPMF;
 			}
 			else
 			{
