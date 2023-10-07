@@ -16,6 +16,8 @@ public class Matricula {
 	private Integer frequencia;
 
 	private StatusAprovacao status;
+	
+	static final BigDecimal notaCorteReprovado = new BigDecimal(6);
 
 	public BigDecimal nota1() {
 		return this.nota1;
@@ -59,9 +61,8 @@ public class Matricula {
 	 * A partir do artigo 104
 	 */
 	public void consolidarParcialmente() {
-		System.out.println(this.status);
 		BigDecimal media = this.calcularMedia();
-		if(media.compareTo(new BigDecimal("3")) == -1) {
+		if(media.compareTo(this.notaCorteReprovado) == -1) {
 				this.status = StatusAprovacao.REP;
 		// APR, APRN
 		}else if(this.atendeCriterioAssiduidade()) {
