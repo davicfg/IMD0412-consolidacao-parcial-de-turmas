@@ -1,6 +1,7 @@
 package teste;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Matricula {
 	private Turma turma;
@@ -71,7 +72,7 @@ public class Matricula {
 		}else if(this.atendeCriterioAssiduidade()) {
 			if(media.compareTo(Matricula.mediaAprovado) >= 0 ) {
 				this.status = StatusAprovacao.APR;				
-			}else if (media.compareTo(Matricula.mediaMinRecuperacao) >= 0) {				
+			}else {				
 				this.status= StatusAprovacao.REC;
 			}
 			
@@ -95,8 +96,8 @@ public class Matricula {
 
 	private BigDecimal calcularMedia() {
 		BigDecimal soma = this.nota1.add(this.nota2).add(this.nota3);
-        BigDecimal media = soma.divide(new BigDecimal("3"), 2, BigDecimal.ROUND_HALF_UP);
-        return media;
+        BigDecimal media = soma.divide(new BigDecimal("3"));
+        return media.setScale(2,RoundingMode.HALF_UP);
 	}
 
 
