@@ -6,45 +6,53 @@ import java.math.BigDecimal;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class MatriculaTest {
 
+class MatriculaTest {
 	@ParameterizedTest(name = "{5}")
-	@CsvSource(delimiter = '\t', value = {"97	7.00	7.00	7.00	APR	APR1",
-			"100	9.00	2.90	9.50	APR	APR2",
-			"74	6.00	6.00	6.00	REPF	REPF3",
-			"0	9.00	3.40	2.00	REPF	REPF4",
-			"93	5.0	5.0	5.0	APRN	APRN5",
-			"78	4.9	4.9	4.9	REC	REC6",
-			"90	2.90	1.00	1.00	REP	REP7",
-			"88	3.10	9.00	9.00	APR	APR8",
-			"78	10.00	3.40	3.40	APRN	APRN9",
-			"79	3.00	9.00	9.00	APR	APR10",
-			"76	8.00	6.00	4.00	APRN	APRN11",
-			"75	7.20	3.90	3.30	REC	REC12",
-			"78	0.00	5.90	9.30	REC	REC13",
-			"77	5.60	0.00	9.30	REC	REC14",
-			"79	9.30	5.60	0.00	REC	REC15",
-			"81	0.00	0.00	0.00	REP	REP16",
-			"82	3.60	10.00	8.00	APR	APR17",
-			"83	3.70	3.00	10.00	APRN	APRN18",
-			"84	6.30	2.90	8.20	REC	REC19",
-			"85	8.20	6.30	2.90	REC	REC20",
-			"86	4.00	4.00	3.00	REC	REC21",
-			"87	5.00	3.00	5.00	REC	REP22",
-			"88	7.00	3.10	6.50	APRN	APRN23",
-			"89	7.30	6.60	3.10	APRN	APRN24",
-			"92	10.00	10.00	10.00	APR	APR25",
-			"93	2.90	2.90	2.90	REP	REP26",
-			"94	3.00	3.00	3.00	REC	REC27",
-			"95	4.20	3.10	2.00	REC	REC28",
-			"97	5.10	6.20	4.00	APRN	APRN29",
-			"96	6.90	6.90	6.90	APRN	APRN30",
-			"97	7.10	7.10	7.10	APR	APR31"
+	@CsvSource(delimiter = '\t', value = {"0	6.2	6.7	6.5	REPF	REPF1",
+			"1	8.0	8.1	8.2	REPF	REPF2",
+			"74	4.3	2.0	1.0	REP	REP3",
+			"75	7.0	6.0	5.0	APR	APR4",
+			"76	5.0	4.4	7.0	REC	REC5",
+			"99	2.0	3.0	0.5	REP	REP6",
+			"100	5.4	5.5	7.0	APR	APR7",
+			"98	0.0	0.0	0.0	REP	REP8",
+			"97	0.0	0.1	0.3	REP	REP9",
+			"96	3.0	2.0	3.7	REP	REP10",
+			"95	2.9	3.5	2.7	REP	REP11",
+			"94	2.8	3.7	2.7	REP	REP12",
+			"93	9.6	4.8	3.3	REP	REP13",
+			"92	6.0	7.0	5.0	APR	APR14",
+			"91	4.4	5.4	8.5	APR	APR15",
+			"90	9.9	9.9	9.9	APR	APR16",
+			"89	10.0	10.0	10.0	APR	APR17",
+			"70	0.0	4.7	4.8	REPMF	REPMF18",
+			"78	0.1	9.3	9.9	REC	REC19",
+			"90	3.9	7.0	7	REC	REC20",
+			"97	4.0	3.0	3	REP	REP21",
+			"56	4.1	5.5	10.0	APR	APR22",
+			"55	9.9	9.1	9.0	REPF	REPF23",
+			"95	10.0	55.0	62.0	APR	APR24",
+			"44	1.2	0.0	0.0	RPMF	RPMF25",
+			"90	3.2	0.1	5.5	REP	REP26",
+			"90	4.5	3.9	5.9	REC	REC27",
+			"85	6.8	4.0	5.5	REC	REC28",
+			"95	8.9	4.1	9.8	APR	APR29",
+			"80	4.5	9.9	2.6	REC	REC30",
+			"55	10.0	10.0	10.0	REPF	REPF31",
+			"69	4.3	5.5	0.0	RPMF	RPMF32",
+			"78	10.0	10.0	0.1	REC	REC33",
+			"74	7.0	6.4	3.9	APR	APR34",
+			"73	2.2	3.5	4.0	REP	REP35",
+			"76	7.7	1.5	9.9	REC	REC36",
+			"78	5.2	4.6	10.0	APR	APR37"
 })
 	void test(Integer frequencia, BigDecimal n1, BigDecimal n2, BigDecimal n3, String status, String nome_teste) {
 		System.out.println(nome_teste);
@@ -57,7 +65,7 @@ class MatriculaTest {
 		
 		m.consolidarParcialmente();
 		
-		assertEquals(status, m.status().toString());
+		assertEquals(m.status().toString(), status);
 	}
 
 }
