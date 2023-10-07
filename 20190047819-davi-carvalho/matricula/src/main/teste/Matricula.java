@@ -17,8 +17,11 @@ public class Matricula {
 
 	private StatusAprovacao status;
 	
-	static final BigDecimal notaCorteReprovadoAprovado = new BigDecimal(6);
+	static final BigDecimal mediaAprovado = new BigDecimal(6);
+	
+	static final BigDecimal mediaReprovado = new BigDecimal(3);
 
+	static final BigDecimal mediaMinRecuperacao = new BigDecimal(6);
 	public BigDecimal nota1() {
 		return this.nota1;
 	}
@@ -62,13 +65,13 @@ public class Matricula {
 	 */
 	public void consolidarParcialmente() {
 		BigDecimal media = this.calcularMedia();
-		if(media.compareTo(Matricula.notaCorteReprovadoAprovado) == -1) {
+		if(media.compareTo(Matricula.mediaReprovado) == -1) {
 				this.status = StatusAprovacao.REP;
 		// APR, APRN
 		}else if(this.atendeCriterioAssiduidade()) {
-			if(media.compareTo(Matricula.notaCorteReprovadoAprovado) >= 0 ) {
+			if(media.compareTo(Matricula.mediaAprovado) >= 0 ) {
 				this.status = StatusAprovacao.APR;				
-			}else if ((media.compareTo(new BigDecimal("5")) >= 0 || media.compareTo(new BigDecimal("7")) < -1) && this.todasAsNotasAcimaDe3()) {				
+			}else if (media.compareTo(Matricula.mediaMinRecuperacao) >= 0) {				
 				this.status= StatusAprovacao.REC;
 			}
 			

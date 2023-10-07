@@ -65,7 +65,7 @@ class MatriculaTest {
 		
 		m.consolidarParcialmente();
 		
-		assertEquals(m.status().toString(), status);
+		assertEquals(status, m.status().toString());
 	}
 
 }
