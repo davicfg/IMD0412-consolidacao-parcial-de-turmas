@@ -68,9 +68,7 @@ public class Matricula {
 		}else if(this.atendeCriterioAssiduidade()) {
 			if(media.compareTo(Matricula.notaCorteReprovadoAprovado) >= 0 ) {
 				this.status = StatusAprovacao.APR;				
-			}else if ((media.compareTo(new BigDecimal("5")) >= 0 || media.compareTo(new BigDecimal("7")) < -1) && this.todasAsNotasAcimaDe3()) {
-				this.status = StatusAprovacao.APRN;				
-			}else {
+			}else if ((media.compareTo(new BigDecimal("5")) >= 0 || media.compareTo(new BigDecimal("7")) < -1) && this.todasAsNotasAcimaDe3()) {				
 				this.status= StatusAprovacao.REC;
 			}
 			
