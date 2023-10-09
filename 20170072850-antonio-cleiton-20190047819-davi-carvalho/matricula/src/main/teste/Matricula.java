@@ -1,6 +1,7 @@
 package teste;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Matricula {
 	private Turma turma;
@@ -16,7 +17,12 @@ public class Matricula {
 	private Integer frequencia;
 
 	private StatusAprovacao status;
+	
+	static final BigDecimal mediaAprovado = new BigDecimal(6f);
+	
+	static final BigDecimal mediaReprovado = new BigDecimal(3f);
 
+	static final BigDecimal mediaMinRecuperacao = new BigDecimal(6f);
 	public BigDecimal nota1() {
 		return this.nota1;
 	}
@@ -59,17 +65,14 @@ public class Matricula {
 	 * A partir do artigo 104
 	 */
 	public void consolidarParcialmente() {
-		System.out.println(this.status);
 		BigDecimal media = this.calcularMedia();
-		if(media.compareTo(new BigDecimal("3")) == -1) {
+		if(media.compareTo(Matricula.mediaReprovado) == -1) {
 				this.status = StatusAprovacao.REP;
-		// APR, APRN
+
 		}else if(this.atendeCriterioAssiduidade()) {
-			if(media.compareTo(new BigDecimal("7")) >= 0 ) {
+			if(media.compareTo(Matricula.mediaAprovado) >= 0 && this.todasAsNotasAcimaDe4()) {
 				this.status = StatusAprovacao.APR;				
-			}else if ((media.compareTo(new BigDecimal("5")) >= 0 || media.compareTo(new BigDecimal("7")) < -1) && this.todasAsNotasAcimaDe3()) {
-				this.status = StatusAprovacao.APRN;				
-			}else {
+			}else {				
 				this.status= StatusAprovacao.REC;
 			}
 			
@@ -83,8 +86,8 @@ public class Matricula {
 		}
 	}
 
-	private boolean todasAsNotasAcimaDe3() {
-		return this.nota1.compareTo(new BigDecimal("3")) >= 0 && this.nota2.compareTo(new BigDecimal("3")) >= 0 && this.nota3.compareTo(new BigDecimal("3")) >= 0;
+	private boolean todasAsNotasAcimaDe4() {
+		return this.nota1.compareTo(new BigDecimal("4")) >= 0 && this.nota2.compareTo(new BigDecimal("4")) >= 0 && this.nota3.compareTo(new BigDecimal("4")) >= 0;
 	}
 
 	private Boolean atendeCriterioAssiduidade() {
@@ -93,7 +96,7 @@ public class Matricula {
 
 	private BigDecimal calcularMedia() {
 		BigDecimal soma = this.nota1.add(this.nota2).add(this.nota3);
-        BigDecimal media = soma.divide(new BigDecimal("3"), 2, BigDecimal.ROUND_HALF_UP);
+        BigDecimal media = soma.divide(new BigDecimal("3"),1, RoundingMode.HALF_EVEN);
         return media;
 	}
 

@@ -1,5 +1,5 @@
 package teste;
 
 public enum StatusAprovacao {
-	APR, APRN, REC, REPF, REPMF,  REP
+	APR, REC, REPF, REPMF,  REP
 }
