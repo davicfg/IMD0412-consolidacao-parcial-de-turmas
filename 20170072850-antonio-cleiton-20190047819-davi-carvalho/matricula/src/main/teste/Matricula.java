@@ -18,11 +18,11 @@ public class Matricula {
 
 	private StatusAprovacao status;
 	
-	static final BigDecimal mediaAprovado = new BigDecimal(6);
+	static final BigDecimal mediaAprovado = new BigDecimal(6f);
 	
-	static final BigDecimal mediaReprovado = new BigDecimal(3);
+	static final BigDecimal mediaReprovado = new BigDecimal(3f);
 
-	static final BigDecimal mediaMinRecuperacao = new BigDecimal(6);
+	static final BigDecimal mediaMinRecuperacao = new BigDecimal(6f);
 	public BigDecimal nota1() {
 		return this.nota1;
 	}
@@ -68,9 +68,9 @@ public class Matricula {
 		BigDecimal media = this.calcularMedia();
 		if(media.compareTo(Matricula.mediaReprovado) == -1) {
 				this.status = StatusAprovacao.REP;
-		// APR, APRN
+
 		}else if(this.atendeCriterioAssiduidade()) {
-			if(media.compareTo(Matricula.mediaAprovado) >= 0 ) {
+			if(media.compareTo(Matricula.mediaAprovado) >= 0 && this.todasAsNotasAcimaDe4()) {
 				this.status = StatusAprovacao.APR;				
 			}else {				
 				this.status= StatusAprovacao.REC;
@@ -86,8 +86,8 @@ public class Matricula {
 		}
 	}
 
-	private boolean todasAsNotasAcimaDe3() {
-		return this.nota1.compareTo(new BigDecimal("3")) >= 0 && this.nota2.compareTo(new BigDecimal("3")) >= 0 && this.nota3.compareTo(new BigDecimal("3")) >= 0;
+	private boolean todasAsNotasAcimaDe4() {
+		return this.nota1.compareTo(new BigDecimal("4")) >= 0 && this.nota2.compareTo(new BigDecimal("4")) >= 0 && this.nota3.compareTo(new BigDecimal("4")) >= 0;
 	}
 
 	private Boolean atendeCriterioAssiduidade() {
@@ -97,8 +97,6 @@ public class Matricula {
 	private BigDecimal calcularMedia() {
 		BigDecimal soma = this.nota1.add(this.nota2).add(this.nota3);
         BigDecimal media = soma.divide(new BigDecimal("3"),1, RoundingMode.HALF_EVEN);
-        System.out.println(media.toString());
-        System.out.println("XXXXXX");
         return media;
 	}
 
