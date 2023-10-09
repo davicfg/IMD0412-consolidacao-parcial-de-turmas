@@ -55,8 +55,6 @@ class MatriculaTest {
 			"78	5.2	4.6	10.0	APR	APR37"
 })
 	void test(Integer frequencia, BigDecimal n1, BigDecimal n2, BigDecimal n3, String status, String nome_teste) {
-		System.out.println(nome_teste);
-		
 		Matricula m = new Matricula();
 		m.registrarNota1(n1);
 		m.registrarNota2(n2);

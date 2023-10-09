@@ -96,8 +96,10 @@ public class Matricula {
 
 	private BigDecimal calcularMedia() {
 		BigDecimal soma = this.nota1.add(this.nota2).add(this.nota3);
-        BigDecimal media = soma.divide(new BigDecimal("3"));
-        return media.setScale(2,RoundingMode.HALF_UP);
+        BigDecimal media = soma.divide(new BigDecimal("3"),1, RoundingMode.HALF_EVEN);
+        System.out.println(media.toString());
+        System.out.println("XXXXXX");
+        return media;
 	}
 
 
